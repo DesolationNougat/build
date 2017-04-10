@@ -650,6 +650,15 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("Target: %s" % CalculateFingerprint(
       oem_props, oem_dict, OPTIONS.info_dict))
 
+  script.Print("  _____                 _       _   _              ");
+  script.Print(" |  __ \               | |     | | (_)             ");
+  script.Print(" | |  | | ___ ___  ___ | | __ _| |_ _  ___  _ __   ");
+  script.Print(" | |  | |/ _ | __|/ _ \| |/ _` | __| |/ _ \| '_ \  ");
+  script.Print(" | |__| |  __|__ \ (_) | | (_| | |_| | (_) | | | | ");
+  script.Print(" |_____/ \___|___/\___/|_|\__,_|\__|_|\___/|_| |_| ");
+  script.Print("                                                   ");
+  script.Print(" ***************** 7.1.x Nougat ****************** ");
+
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   device_specific.FullOTA_InstallBegin()
 
