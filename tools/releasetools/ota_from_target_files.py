@@ -673,7 +673,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print(" ***************** 7.1.x Nougat ****************** ");
 
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
-  device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
   script.UnpackPackageDir("install", "/tmp/install")
@@ -684,6 +683,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     script.Mount("/system")
     script.RunBackup("backup")
     script.Unmount("/system")
+
+  device_specific.FullOTA_InstallBegin()
 
   system_progress = 0.75
 
