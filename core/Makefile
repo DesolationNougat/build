@@ -1170,6 +1170,8 @@ endif
 
 # $(1): output file
 define build-systemimage-target
+  @echo "Generating Changelog"
+  $(hide) ./vendor/deso/tools/changelog > /dev/null
   @echo "Target system fs image: $(1)"
   $(call create-system-vendor-symlink)
   @mkdir -p $(dir $(1)) $(systemimage_intermediates) && rm -rf $(systemimage_intermediates)/system_image_info.txt
