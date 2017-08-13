@@ -36,13 +36,13 @@ except:
     device = product
 
 if not depsonly:
-    print "Device %s not found. Attempting to retrieve device repository from Desolation Github (http://github.com/DesolationROM-Devices)." % device
+    print "Device %s not found. Attempting to retrieve device repository from Deso Github (http://github.com/DesolationRom-Devices)." % device
 
 repositories = []
 
 page = 1
 while not depsonly:
-    request = Request("https://api.github.com/users/DesolationROM-Devices/repos?page=%d" % page)
+    request = Request("https://api.github.com/users/DesolationRom-Devices/repos?page=%d" % page)
     api_file = os.getenv("HOME") + '/api_token'
     if (os.path.isfile(api_file)):
         infile = open(api_file, 'r')
@@ -133,14 +133,13 @@ def add_to_manifest_dependencies(repositories):
     for repository in repositories:
         repo_name = repository['repository']
         repo_target = repository['target_path']
-        repo_remote = repository['remote']
         existing_project = exists_in_tree(lm, repo_target)
         if existing_project != None:
             if existing_project.attrib['name'] != repository['repository']:
                 print 'Updating dependency %s' % (repo_name)
                 existing_project.set('name', repository['repository'])
             if existing_project.attrib['revision'] == repository['branch']:
-                print 'DesolationROM-Devices/%s already exists' % (repo_name)
+                print 'DesolationRom-Devices/%s already exists' % (repo_name)
             else:
                 print 'updating branch for %s to %s' % (repo_name, repository['branch'])
                 existing_project.set('revision', repository['branch'])
@@ -148,7 +147,7 @@ def add_to_manifest_dependencies(repositories):
 
         print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": repo_remote, "name": repo_name, "revision": "n" })
+            "remote": "github", "name": repo_name, "revision": "n" })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -176,15 +175,15 @@ def add_to_manifest(repositories):
         existing_project = exists_in_tree_device(lm, repo_name)
         if existing_project != None:
             if existing_project.attrib['revision'] == repository['branch']:
-                print 'DesolationROM-Devices/%s already exists' % (repo_name)
+                print 'DesolationRom-Devices/%s already exists' % (repo_name)
             else:
-                print 'updating branch for DesolationROM-Devices/%s to %s' % (repo_name, repository['branch'])
+                print 'updating branch for DesolationRom-Devices/%s to %s' % (repo_name, repository['branch'])
                 existing_project.set('revision', repository['branch'])
             continue
 
-        print 'Adding dependency: DesolationROM-Devices/%s -> %s' % (repo_name, repo_target)
+        print 'Adding dependency: DesolationRom-Devices/%s -> %s' % (repo_name, repo_target)
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "deso-devices", "name": repo_name, "revision": "n" })
+            "remote": "github", "name": "DesolationRom-Devices/%s" % repo_name, "revision": "n" })
 
         if 'branch' in repository:
             project.set('revision', repository['branch'])
@@ -254,4 +253,4 @@ else:
             print "Done"
             sys.exit()
 
-print "Repository for %s not found in the Desolation Github repository list. If this is in error, you may need to manually add it to .repo/local_manifests/deso_manifest.xml" % device
+print "Repository for %s not found in the DesolationRom_Devices Github repository list. If this is in error, you may need to manually add it to .repo/local_manifests/deso_manifest.xml" % device
